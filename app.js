@@ -26,7 +26,7 @@ function cellFor(position) {
   const cell = element('td', `status-${position.status.replaceAll('·', '-')}`); cell.append(element('strong', 'status-label', position.status));
   if (position.status === '확인 자료 없음') { cell.append(element('p', 'boundary', position.boundary)); return cell; }
   cell.append(element('blockquote', null, `“${position.quote}”`));
-  const source = sourceById.get(position.sourceId); const meta = element('p', 'source-meta'); meta.append(document.createTextNode(`${position.date} · ${position.tier} · `), sourceLink(source)); cell.append(meta, element('p', 'boundary', position.boundary)); return cell;
+  const source = sourceById.get(position.sourceId); const meta = element('p', 'source-meta'); meta.append(document.createTextNode(`${position.date} · ${position.tier} · `), sourceLink(source)); const context = position.statementContext ? element('p', 'statement-context', position.statementContext) : null; cell.append(meta); if (context) cell.append(context); cell.append(element('p', 'boundary', position.boundary)); return cell;
 }
 function renderComparison() {
   const officeCandidates = convention.candidates[state.office];
