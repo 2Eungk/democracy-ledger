@@ -45,5 +45,40 @@ function renderSelectionLens() {
   const source = element('a', null, '근거 메모 보기'); source.href = lens.sourceNote; source.target = '_blank'; source.rel = 'noreferrer';
   $('#selection-lens').replaceChildren(element('p', null, lens.basis), list, note, source);
 }
+function renderShowcase() {
+  const candidateById = new Map(candidates.map((candidate) => [candidate.id, candidate]));
+  const slides = convention.issues.flatMap((issue) => issue.positions
+    .filter((position) => position.status === '직접 확인' && candidateById.get(position.candidateId)?.portrait)
+    .map((position) => ({ ...position, issueLabel: issue.label, candidate: candidateById.get(position.candidateId) })))
+    .sort((a, b) => b.date.localeCompare(a.date));
+  const stage = $('#statement-showcase');
+  const previous = $('#showcase-previous');
+  const next = $('#showcase-next');
+  const pause = $('#showcase-pause');
+  if (!slides.length) { stage.textContent = '표시할 공개 프로필 사진과 직접 인용이 함께 확인된 기록이 없습니다.'; previous.hidden = next.hidden = pause.hidden = true; return; }
+  let index = 0;
+  let paused = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let timer;
+  const stop = () => { if (timer) window.clearInterval(timer); timer = undefined; };
+  const start = () => { stop(); if (!paused) timer = window.setInterval(() => { index = (index + 1) % slides.length; draw(); }, 6500); };
+  const draw = () => {
+    const slide = slides[index]; const source = sourceById.get(slide.sourceId);
+    const card = element('article', 'showcase-card');
+    const photoLink = element('a', 'showcase-photo-link'); photoLink.href = slide.candidate.portrait.sourceUrl; photoLink.target = '_blank'; photoLink.rel = 'noreferrer'; photoLink.setAttribute('aria-label', `${slide.candidate.name} ${slide.candidate.portrait.label} 원문 열기`);
+    const photo = document.createElement('img'); photo.className = 'showcase-photo'; photo.src = slide.candidate.portrait.url; photo.alt = `${slide.candidate.name} 공개 프로필 사진`; photo.loading = 'eager'; photo.addEventListener('error', () => { photoLink.replaceChildren(element('span', 'showcase-photo-fallback', '사진 원문을 불러오지 못했습니다')); }); photoLink.append(photo);
+    const copy = element('div', 'showcase-copy'); copy.append(element('p', 'showcase-position', slide.candidate.office), element('h3', null, slide.candidate.name), element('p', 'showcase-issue', slide.issueLabel), element('blockquote', null, `“${slide.quote}”`));
+    const meta = element('p', 'showcase-meta'); meta.append(document.createTextNode(`${slide.date} · ${slide.status} · `), sourceLink(source));
+    const provenance = element('a', 'portrait-provenance', slide.candidate.portrait.label); provenance.href = slide.candidate.portrait.sourceUrl; provenance.target = '_blank'; provenance.rel = 'noreferrer'; copy.append(meta, provenance, element('p', 'boundary', slide.boundary));
+    const count = element('p', 'showcase-count', `${index + 1} / ${slides.length}`); card.append(photoLink, copy, count); stage.replaceChildren(card);
+    previous.disabled = slides.length < 2; next.disabled = slides.length < 2;
+    pause.textContent = paused ? '자동 넘김 시작' : '자동 넘김 멈춤'; pause.setAttribute('aria-pressed', String(paused));
+  };
+  previous.addEventListener('click', () => { index = (index - 1 + slides.length) % slides.length; draw(); start(); });
+  next.addEventListener('click', () => { index = (index + 1) % slides.length; draw(); start(); });
+  pause.addEventListener('click', () => { paused = !paused; draw(); start(); });
+  stage.addEventListener('mouseenter', stop); stage.addEventListener('mouseleave', start); stage.addEventListener('focusin', stop); stage.addEventListener('focusout', start);
+  draw(); start();
+}
 function render() { renderFilters(); renderComparison(); }
+renderShowcase();
 renderStatus(); renderSelectionLens(); renderSources(); render();

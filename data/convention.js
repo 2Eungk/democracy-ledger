@@ -27,16 +27,16 @@ export const convention = Object.freeze({
   },
   candidates: {
     party_leader: [
-      { id: 'kim-min-seok', name: '김민석', office: '당대표', finalBallot: '최종 투표 대상', result: '당선', resultSourceId: 'result-leader-report' },
-      { id: 'jung-cheong-rae', name: '정청래', office: '당대표', finalBallot: '최종 투표 대상', result: '미당선', resultSourceId: 'result-leader-report' },
+      { id: 'kim-min-seok', name: '김민석', office: '당대표', finalBallot: '최종 투표 대상', result: '당선', resultSourceId: 'result-leader-report', portrait: { url: 'https://theminjoo.kr/people/connect/people/364/profile.jpg', sourceUrl: 'https://theminjoo.kr/main/sub/introduce/team.php?class=2', label: '더불어민주당 공개 프로필 사진' } },
+      { id: 'jung-cheong-rae', name: '정청래', office: '당대표', finalBallot: '최종 투표 대상', result: '미당선', resultSourceId: 'result-leader-report', portrait: { url: 'https://theminjoo.kr/people/connect/people/355/profile.jpg', sourceUrl: 'https://theminjoo.kr/main/sub/introduce/team.php?class=2', label: '더불어민주당 공개 프로필 사진' } },
     ],
     supreme_council: [
-      { id: 'choi-min-hee', name: '최민희', office: '최고위원', finalBallot: '최종 투표 대상', result: '당선', resultSourceId: 'result-supreme-report' },
+      { id: 'choi-min-hee', name: '최민희', office: '최고위원', finalBallot: '최종 투표 대상', result: '당선', resultSourceId: 'result-supreme-report', portrait: { url: 'https://theminjoo.kr/people/connect/people/1288/profile.jpg', sourceUrl: 'https://theminjoo.kr/main/sub/introduce/team.php?class=2', label: '더불어민주당 공개 프로필 사진' } },
       { id: 'kim-yong', name: '김용', office: '최고위원', finalBallot: '최종 투표 대상', result: '미당선', resultSourceId: 'result-supreme-report' },
-      { id: 'seo-mi-hwa', name: '서미화', office: '최고위원', finalBallot: '최종 투표 대상', result: '당선', resultSourceId: 'result-supreme-report' },
-      { id: 'han-min-soo', name: '한민수', office: '최고위원', finalBallot: '최종 투표 대상', result: '당선', resultSourceId: 'result-supreme-report' },
-      { id: 'lee-seong-yoon', name: '이성윤', office: '최고위원', finalBallot: '최종 투표 대상', result: '당선', resultSourceId: 'result-supreme-report' },
-      { id: 'park-sun-won', name: '박선원', office: '최고위원', finalBallot: '최종 투표 대상', result: '당선', resultSourceId: 'result-supreme-report' },
+      { id: 'seo-mi-hwa', name: '서미화', office: '최고위원', finalBallot: '최종 투표 대상', result: '당선', resultSourceId: 'result-supreme-report', portrait: { url: 'https://theminjoo.kr/people/connect/people/13171917/profile.jpg', sourceUrl: 'https://theminjoo.kr/main/sub/introduce/team.php?class=2', label: '더불어민주당 공개 프로필 사진' } },
+      { id: 'han-min-soo', name: '한민수', office: '최고위원', finalBallot: '최종 투표 대상', result: '당선', resultSourceId: 'result-supreme-report', portrait: { url: 'https://theminjoo.kr/people/connect/people/1422/profile.jpg', sourceUrl: 'https://theminjoo.kr/main/sub/introduce/team.php?class=2', label: '더불어민주당 공개 프로필 사진' } },
+      { id: 'lee-seong-yoon', name: '이성윤', office: '최고위원', finalBallot: '최종 투표 대상', result: '당선', resultSourceId: 'result-supreme-report', portrait: { url: 'https://theminjoo.kr/people/connect/people/011301720/profile.jpg', sourceUrl: 'https://theminjoo.kr/main/sub/introduce/team.php?class=2', label: '더불어민주당 공개 프로필 사진' } },
+      { id: 'park-sun-won', name: '박선원', office: '최고위원', finalBallot: '최종 투표 대상', result: '당선', resultSourceId: 'result-supreme-report', portrait: { url: 'https://theminjoo.kr/people/connect/people/13432363/profile.jpg', sourceUrl: 'https://theminjoo.kr/main/sub/introduce/team.php?class=2', label: '더불어민주당 공개 프로필 사진' } },
     ],
   },
   excludedAfterRegistration: [
@@ -134,6 +134,7 @@ export function validateConvention(data) {
   for (const source of data.sources) if (!/^https:\/\//.test(source.url)) errors.push(`source ${source.id} requires HTTPS`);
   for (const candidate of Object.values(data.candidates).flat()) {
     if (!sourceIds.has(candidate.resultSourceId)) errors.push(`candidate result source missing: ${candidate.id}`);
+    if (candidate.portrait && (!/^https:\/\//.test(candidate.portrait.url) || !/^https:\/\//.test(candidate.portrait.sourceUrl) || !candidate.portrait.label)) errors.push(`invalid portrait provenance: ${candidate.id}`);
   }
   for (const item of data.excludedAfterRegistration) {
     if (item.reason !== '확인 자료 없음' && !sourceIds.has(item.sourceId)) errors.push(`excluded candidate source missing: ${item.name}`);
