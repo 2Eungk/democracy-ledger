@@ -36,7 +36,26 @@ function renderComparison() {
   for (const issue of issues) { const issueRow = element('tr'); const label = element('th'); label.scope = 'row'; label.append(element('strong', null, issue.label), element('span', 'issue-scope', issue.scope)); issueRow.append(label); for (const candidate of officeCandidates) issueRow.append(cellFor(issue.positions.find((position) => position.candidateId === candidate.id))); body.append(issueRow); }
   table.append(head, body); $('#comparison-table').replaceChildren(table);
 }
-function renderSources() { $('#sources').replaceChildren(...convention.sources.map((source) => { const card = element('article', 'source-card'); card.append(element('h3', null, source.title), element('p', null, `${source.date} · ${source.tier}`), sourceLink(source), element('p', 'boundary', source.caveat)); return card; })); }
+function renderSources() {
+  const grouped = new Map();
+  for (const source of convention.sources) {
+    const key = source.url;
+    if (!grouped.has(key)) grouped.set(key, []);
+    grouped.get(key).push(source);
+  }
+  $('#sources').replaceChildren(...[...grouped.values()].map((entries) => {
+    const [source] = entries;
+    const card = element('article', 'source-card');
+    card.append(element('h3', null, source.title), element('p', null, `${source.date} · ${source.tier}`), sourceLink(source));
+    if (entries.length === 1) card.append(element('p', 'boundary', source.caveat));
+    else {
+      const notes = element('ul', 'source-caveats');
+      for (const entry of entries) notes.append(element('li', 'boundary', entry.caveat));
+      card.append(notes);
+    }
+    return card;
+  }));
+}
 function renderSelectionLens() {
   const lens = convention.event.issueSelectionLens;
   const list = element('ul');
