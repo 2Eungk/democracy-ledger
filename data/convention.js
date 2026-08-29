@@ -165,6 +165,15 @@ export const convention = Object.freeze({
 
 const allowedStatuses = new Set(['직접 확인', '조건부·절차 제안', '확인 자료 없음']);
 const forbidden = new Set(['vote', 'votes', 'score', 'scorecard', 'faction', 'affiliation', 'influence', 'loyalty', 'motive', 'effectiveness', 'policyEffectiveness']);
+const isHttpsUrl = (value) => {
+  try { return typeof value === 'string' && /^https:\/\/[^/]/.test(value) && new URL(value).protocol === 'https:'; } catch { return false; }
+};
+const isIsoDate = (value) => {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value ?? '')) return false;
+  const [year, month, day] = value.split('-').map(Number);
+  const parsed = new Date(Date.UTC(year, month - 1, day));
+  return parsed.getUTCFullYear() === year && parsed.getUTCMonth() === month - 1 && parsed.getUTCDate() === day;
+};
 export function validateConvention(data) {
   const errors = [];
   const sourceIds = new Set(data.sources.map((source) => source.id));
@@ -190,11 +199,15 @@ export function validateConvention(data) {
       if (/(국무총리|당대표)/.test(source?.caveat ?? '') && !position.statementContext) errors.push(`officeholder statement requires candidate-context label: ${position.candidateId}`);
     }
   }
+  const showcaseIds = new Set();
   for (const record of data.showcaseRecords ?? []) {
     for (const key of Object.keys(record)) if (forbidden.has(key)) errors.push(`forbidden showcase field: ${key}`);
     const person = record.person;
     if (record.status !== '직접 확인' || !record.id || !record.recordClass || !record.issueLabel || !record.quote || !record.date || !record.boundary || !sourceIds.has(record.sourceId)) errors.push(`showcase record incomplete: ${record.id ?? 'unknown'}`);
-    if (!person?.id || !person.name || !person.office || !person.portrait || !/^https:\/\//.test(person.portrait.url) || !/^https:\/\//.test(person.portrait.sourceUrl) || !person.portrait.label) errors.push(`invalid showcase portrait provenance: ${record.id ?? 'unknown'}`);
+    if (showcaseIds.has(record.id)) errors.push(`duplicate showcase record id: ${record.id}`);
+    showcaseIds.add(record.id);
+    if (!isIsoDate(record.date)) errors.push(`invalid showcase record date: ${record.id ?? 'unknown'}`);
+    if (!person?.id || !person.name || !person.office || !person.portrait || !isHttpsUrl(person.portrait.url) || !isHttpsUrl(person.portrait.sourceUrl) || !person.portrait.label) errors.push(`invalid showcase portrait provenance: ${record.id ?? 'unknown'}`);
   }
   return errors;
 }
