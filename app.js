@@ -47,10 +47,13 @@ function renderSelectionLens() {
 }
 function renderShowcase() {
   const candidateById = new Map(candidates.map((candidate) => [candidate.id, candidate]));
-  const slides = convention.issues.flatMap((issue) => issue.positions
+  const candidateSlides = convention.issues.flatMap((issue) => issue.positions
     .filter((position) => position.status === '직접 확인' && candidateById.get(position.candidateId)?.portrait)
-    .map((position) => ({ ...position, issueLabel: issue.label, candidate: candidateById.get(position.candidateId) })))
-    .sort((a, b) => b.date.localeCompare(a.date));
+    .map((position) => ({ ...position, issueLabel: issue.label, person: candidateById.get(position.candidateId), recordClass: '후보 공개 발언' })));
+  const recordSlides = (convention.showcaseRecords ?? [])
+    .filter((record) => record.status === '직접 확인' && record.person?.portrait)
+    .map((record) => ({ ...record }));
+  const slides = [...candidateSlides, ...recordSlides].sort((a, b) => b.date.localeCompare(a.date));
   const stage = $('#statement-showcase');
   const previous = $('#showcase-previous');
   const next = $('#showcase-next');
@@ -63,12 +66,13 @@ function renderShowcase() {
   const start = () => { stop(); if (!paused) timer = window.setInterval(() => { index = (index + 1) % slides.length; draw(); }, 6500); };
   const draw = () => {
     const slide = slides[index]; const source = sourceById.get(slide.sourceId);
+    const person = slide.person;
     const card = element('article', 'showcase-card');
-    const photoLink = element('a', 'showcase-photo-link'); photoLink.href = slide.candidate.portrait.sourceUrl; photoLink.target = '_blank'; photoLink.rel = 'noreferrer'; photoLink.setAttribute('aria-label', `${slide.candidate.name} ${slide.candidate.portrait.label} 원문 열기`);
-    const photo = document.createElement('img'); photo.className = 'showcase-photo'; photo.src = slide.candidate.portrait.url; photo.alt = `${slide.candidate.name} 공개 프로필 사진`; photo.loading = 'eager'; photo.addEventListener('error', () => { photoLink.replaceChildren(element('span', 'showcase-photo-fallback', '사진 원문을 불러오지 못했습니다')); }); photoLink.append(photo);
-    const copy = element('div', 'showcase-copy'); copy.append(element('p', 'showcase-position', slide.candidate.office), element('h3', null, slide.candidate.name), element('p', 'showcase-issue', slide.issueLabel), element('blockquote', null, `“${slide.quote}”`));
-    const meta = element('p', 'showcase-meta'); meta.append(document.createTextNode(`${slide.date} · ${slide.status} · `), sourceLink(source));
-    const provenance = element('a', 'portrait-provenance', slide.candidate.portrait.label); provenance.href = slide.candidate.portrait.sourceUrl; provenance.target = '_blank'; provenance.rel = 'noreferrer'; copy.append(meta, provenance, element('p', 'boundary', slide.boundary));
+    const photoLink = element('a', 'showcase-photo-link'); photoLink.href = person.portrait.sourceUrl; photoLink.target = '_blank'; photoLink.rel = 'noreferrer'; photoLink.setAttribute('aria-label', `${person.name} ${person.portrait.label} 원문 열기`);
+    const photo = document.createElement('img'); photo.className = 'showcase-photo'; photo.src = person.portrait.url; photo.alt = `${person.name} 공개 프로필 사진`; photo.loading = 'eager'; photo.addEventListener('error', () => { photoLink.replaceChildren(element('span', 'showcase-photo-fallback', '사진 원문을 불러오지 못했습니다')); }); photoLink.append(photo);
+    const copy = element('div', 'showcase-copy'); copy.append(element('p', 'showcase-position', person.office), element('h3', null, person.name), element('p', 'showcase-issue', slide.issueLabel), element('blockquote', null, `“${slide.quote}”`));
+    const meta = element('p', 'showcase-meta'); meta.append(document.createTextNode(`${slide.date} · ${slide.recordClass} · ${slide.status} · `), sourceLink(source));
+    const provenance = element('a', 'portrait-provenance', person.portrait.label); provenance.href = person.portrait.sourceUrl; provenance.target = '_blank'; provenance.rel = 'noreferrer'; copy.append(meta, provenance, element('p', 'boundary', slide.boundary));
     const count = element('p', 'showcase-count', `${index + 1} / ${slides.length}`); card.append(photoLink, copy, count); stage.replaceChildren(card);
     previous.disabled = slides.length < 2; next.disabled = slides.length < 2;
     pause.textContent = paused ? '자동 넘김 시작' : '자동 넘김 멈춤'; pause.setAttribute('aria-pressed', String(paused));

@@ -39,6 +39,41 @@ export const convention = Object.freeze({
       { id: 'park-sun-won', name: '박선원', office: '최고위원', finalBallot: '최종 투표 대상', result: '당선', resultSourceId: 'result-supreme-report', portrait: { url: 'https://theminjoo.kr/people/connect/people/13432363/profile.jpg', sourceUrl: 'https://theminjoo.kr/main/sub/introduce/team.php?class=2', label: '더불어민주당 공개 프로필 사진' } },
     ],
   },
+  showcaseRecords: [
+    {
+      id: 'park-beom-gye-kim-rhetoric-response',
+      person: { id: 'park-beom-gye', name: '박범계', office: '국회의원', portrait: { url: 'https://theminjoo.kr/people/connect/people/112/profile.jpg', sourceUrl: 'https://theminjoo.kr/main/sub/introduce/team.php?class=2', label: '더불어민주당 공개 프로필 사진' } },
+      recordClass: '정치인 응답',
+      issueLabel: '조희대 대법원장 관련 발언에 대한 응답',
+      status: '직접 확인',
+      quote: '저는 김민석 당대표의 표현을 넘어설 수가 없는 사람입니다.',
+      date: '2026-08-20',
+      sourceId: 'ddanzi-park-response',
+      boundary: '김민석의 관련 표현을 직접 언급한 박범계의 인터뷰 응답입니다. 정식 탄핵 방침·당론·조직적 공조 또는 법적 판단으로 표시하지 않습니다.',
+    },
+    {
+      id: 'kim-min-seok-convention-review-tf',
+      person: { id: 'kim-min-seok', name: '김민석', office: '더불어민주당 당대표', portrait: { url: 'https://theminjoo.kr/people/connect/people/364/profile.jpg', sourceUrl: 'https://theminjoo.kr/main/sub/introduce/team.php?class=2', label: '더불어민주당 공개 프로필 사진' } },
+      recordClass: '당 공식 회의 발언',
+      issueLabel: '전당대회 평가·제도 개선 계획',
+      status: '직접 확인',
+      quote: '전대 과정에서 제기된 연설 없는 투표, 검증 없는 조사 등의 문제점 개선을 위해 곧 외부 인사 중심으로 전대 평가 및 전대 제도 개선 TF를 설치하겠습니다.',
+      date: '2026-08-24',
+      sourceId: 'theminjoo-kim-convention-review',
+      boundary: '당대표의 TF 설치 계획 발언입니다. 여론조사 조작 등 개별 주장·법 위반의 사실, TF 구성 완료 또는 조사·법적 검토의 결과로 표시하지 않습니다.',
+    },
+    {
+      id: 'kim-min-seok-presidential-office-unity-briefing',
+      person: { id: 'kim-min-seok', name: '김민석', office: '더불어민주당 당대표', portrait: { url: 'https://theminjoo.kr/people/connect/people/364/profile.jpg', sourceUrl: 'https://theminjoo.kr/main/sub/introduce/team.php?class=2', label: '더불어민주당 공개 프로필 사진' } },
+      recordClass: '청와대 공식 브리핑의 귀속 발언',
+      issueLabel: '전당대회 이후 당내 단합 제안',
+      status: '직접 확인',
+      quote: '전당대회 과정에서의 일부 과한 표현에 대해 사과했고, 당의 단합과 국정운영의 뒷받침을 함께하자',
+      date: '2026-08-19',
+      sourceId: 'president-office-party-dinner',
+      boundary: '청와대 서면브리핑이 김민석에게 귀속한 만찬 발언입니다. 청와대의 전당대회 지시·개입, 후보 선출 또는 내부 갈등 해결의 증거로 표시하지 않습니다.',
+    },
+  ],
   excludedAfterRegistration: [
     { name: '송영길', reason: '확인 자료 없음', date: '', boundary: '최종 결과표에 포함되지 않은 사유는 직접 확인한 공식 자료에서 찾지 못해 기재하지 않습니다.' },
     { name: '김영호', reason: '사퇴 공고', date: '2026-08-16', sourceId: 'withdrawal-official', boundary: '당 공식 사퇴 공고에 따른 기록이며, 이 화면은 사퇴 사유를 추가로 추정하지 않습니다.' },
@@ -48,6 +83,9 @@ export const convention = Object.freeze({
     { id: 'result-leader-report', title: '더불어민주당 중앙당선거관리위원회 — 제3차 정기전국전당원대회 당대표·최고위원 선거 결과', url: 'https://theminjoo.kr/main/sub/news/view.php?sno=0&brd=1&post=1219700&search=', tier: '당 공식 선거 결과', date: '2026-08-17', caveat: '더불어민주당 공지에 게시된 선거 결과표입니다. 이 화면은 당선·미당선과 최종 투표 대상 여부만 보이며, 득표율·지지 기반·정치적 의미를 해석하지 않습니다.' },
     { id: 'result-supreme-report', title: '더불어민주당 중앙당선거관리위원회 — 제3차 정기전국전당원대회 당대표·최고위원 선거 결과', url: 'https://theminjoo.kr/main/sub/news/view.php?sno=0&brd=1&post=1219700&search=', tier: '당 공식 선거 결과', date: '2026-08-17', caveat: '더불어민주당 공지에 게시된 선거 결과표입니다. 이 화면은 당선·미당선과 최종 투표 대상 여부만 보이며, 득표율·지지 기반·정치적 의미를 해석하지 않습니다.' },
     { id: 'withdrawal-official', title: '더불어민주당 중앙당선거관리위원회 — 후보자 사퇴 공고', url: 'https://theminjoo.kr/main/sub/news/view.php?sno=0&brd=1&post=1219695&search=', tier: '당 공식 사퇴 공고', date: '2026-08-17', caveat: '더불어민주당 공지가 확인하는 것은 최고위원 본경선 등록 후보 두 명의 사퇴일입니다. 사퇴 사유나 다른 후보의 최종 결과표 미포함 사유는 이 자료로 판단하지 않습니다.' },
+    { id: 'ddanzi-park-response', title: '박범계 인터뷰 — 김민석 표현 관련 응답', url: 'https://www.ddanzi.com/broadcast/892221259', tier: '방송·프로그램 전사', date: '2026-08-20', caveat: '프로그램 녹음·전사 페이지의 박범계 인터뷰입니다. 원문에 표시된 “약간의 오타가 있을 수” 있다는 고지를 따르며, 이 화면은 김민석 표현을 직접 언급한 응답의 범위만 표시합니다.' },
+    { id: 'theminjoo-kim-convention-review', title: '더불어민주당 공보국 — 제4차 최고위원회의 모두발언', url: 'https://www.theminjoo.kr/main/sub/news/view.php?brd=230&post=1219781', tier: '당 공식 회의 발언', date: '2026-08-24', caveat: '더불어민주당 공보국이 공개한 제4차 최고위원회의 모두발언입니다. TF 설치와 법적 검토의 계획을 확인하는 자료이며, 개별 주장·조사·법적 처리의 사실 또는 결과를 입증하지 않습니다.' },
+    { id: 'president-office-party-dinner', title: '청와대 — 더불어민주당 당대표·후보자 만찬 간담회 서면브리핑', url: 'https://www.president.go.kr/briefings/3yJOCRPk', tier: '청와대 공식 브리핑', date: '2026-08-19', caveat: '청와대 정무수석 홍익표 명의의 서면브리핑입니다. 만찬과 브리핑에서 김민석에게 귀속한 발언을 확인하는 범위이며, 전당대회 지시·개입·후보 선출 또는 갈등 해결을 입증하지 않습니다.' },
     { id: 'yna-integration', title: '김민석표 연대·통합 시동', url: 'https://www.yna.co.kr/view/AKR20260824125000001?input=1195m', tier: '보도·발언 인용', date: '2026-08-24', caveat: '연합뉴스가 김민석 대표의 회의 발언을 인용한 보도입니다. 합당의 구체적 방식·시점까지 확정한 발언으로 읽지 않습니다.' },
     { id: 'yna-procedure', title: '제주·인천 합동연설회 보도', url: 'https://www.yna.co.kr/view/AKR20260808029951001?input=1195m', tier: '보도·발언 인용', date: '2026-08-08', caveat: '연합뉴스의 합동연설회 보도입니다. 해당 인용은 경선 절차 논쟁에 관한 발언이며, 일반적 제도 입장 전체를 확정하지 않습니다.' },
     { id: 'newsis-housing', title: '전당대회 D-4 수도권 표심 공략', url: 'https://www.newsis.com/view/NISX20260813_0003748547', tier: '보도·발언 인용', date: '2026-08-13', caveat: '뉴시스가 후보의 인터뷰·발언을 인용한 보도입니다. TF 설치 제안은 실행·입법 완료의 주장과 다릅니다.' },
@@ -151,6 +189,12 @@ export function validateConvention(data) {
       if (position.statementContext && !(/^(후보 활동 중 공개 발언|발언 당시 역할: (국무총리|당대표) \(후보 공약 아님\))$/.test(position.statementContext))) errors.push(`invalid statement context: ${position.candidateId}`);
       if (/(국무총리|당대표)/.test(source?.caveat ?? '') && !position.statementContext) errors.push(`officeholder statement requires candidate-context label: ${position.candidateId}`);
     }
+  }
+  for (const record of data.showcaseRecords ?? []) {
+    for (const key of Object.keys(record)) if (forbidden.has(key)) errors.push(`forbidden showcase field: ${key}`);
+    const person = record.person;
+    if (record.status !== '직접 확인' || !record.id || !record.recordClass || !record.issueLabel || !record.quote || !record.date || !record.boundary || !sourceIds.has(record.sourceId)) errors.push(`showcase record incomplete: ${record.id ?? 'unknown'}`);
+    if (!person?.id || !person.name || !person.office || !person.portrait || !/^https:\/\//.test(person.portrait.url) || !/^https:\/\//.test(person.portrait.sourceUrl) || !person.portrait.label) errors.push(`invalid showcase portrait provenance: ${record.id ?? 'unknown'}`);
   }
   return errors;
 }
