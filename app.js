@@ -172,6 +172,18 @@ function renderShowcase() {
   next.addEventListener('click', () => { index = (index + 1) % slides.length; draw(); start(); });
   pause.addEventListener('click', () => { paused = !paused; draw(); start(); });
   stage.addEventListener('mouseenter', stop); stage.addEventListener('mouseleave', start); stage.addEventListener('focusin', stop); stage.addEventListener('focusout', start);
+  let pointerStart = null;
+  stage.addEventListener('pointerdown', (event) => {
+    if (event.pointerType === 'mouse' || event.target.closest('a')) return;
+    pointerStart = { x: event.clientX, y: event.clientY };
+  });
+  stage.addEventListener('pointerup', (event) => {
+    if (!pointerStart || event.target.closest('a')) { pointerStart = null; return; }
+    const dx = event.clientX - pointerStart.x; const dy = event.clientY - pointerStart.y; pointerStart = null;
+    if (Math.abs(dx) < 48 || Math.abs(dx) <= Math.abs(dy)) return;
+    index = (index + (dx < 0 ? 1 : slides.length - 1)) % slides.length; draw(); start();
+  });
+  stage.addEventListener('pointercancel', () => { pointerStart = null; });
   draw(); start();
 }
 function render() { renderFilters(); renderComparison(); }
