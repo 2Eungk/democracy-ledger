@@ -121,6 +121,7 @@ function renderPeopleIndex() {
 function renderPersonDetail() {
   const panel = $('#person-detail');
   const match = location.hash.match(/^#person=([^&]+)$/);
+  document.body.classList.toggle('is-person-route', Boolean(match));
   if (!match) { panel.hidden = true; panel.replaceChildren(); return; }
   const personId = decodeURIComponent(match[1]);
   const records = getShowcaseSlides().filter((slide) => slide.person.id === personId).sort((a, b) => b.date.localeCompare(a.date));
