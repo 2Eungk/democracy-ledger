@@ -64,7 +64,24 @@ function renderSelectionLens() {
   const source = element('a', null, '근거 메모 보기'); source.href = lens.sourceNote; source.target = '_blank'; source.rel = 'noreferrer';
   $('#selection-lens').replaceChildren(element('p', null, lens.basis), list, note, source);
 }
-function renderShowcase() {
+// 이 순서는 사실·평가가 아닌 첫 화면 편집 순서입니다. 숫자는 화면에 노출하지 않습니다.
+const showcasePriority = new Map([
+  ['kim-min-seok', { recognition: 100, office: 4 }],
+  ['jung-cheong-rae', { recognition: 95, office: 4 }],
+  ['park-beom-gye', { recognition: 90, office: 1 }],
+  ['han-byung-do', { recognition: 75, office: 3 }],
+  ['choi-min-hee', { recognition: 70, office: 2 }],
+  ['han-min-soo', { recognition: 60, office: 2 }],
+  ['seo-mi-hwa', { recognition: 60, office: 2 }],
+  ['lee-seong-yoon', { recognition: 60, office: 2 }],
+  ['park-sun-won', { recognition: 60, office: 2 }],
+]);
+function compareShowcaseOrder(a, b) {
+  const aRank = showcasePriority.get(a.person.id) ?? { recognition: 0, office: 0 };
+  const bRank = showcasePriority.get(b.person.id) ?? { recognition: 0, office: 0 };
+  return bRank.recognition - aRank.recognition || bRank.office - aRank.office || b.date.localeCompare(a.date) || a.person.name.localeCompare(b.person.name, 'ko');
+}
+function getShowcaseSlides() {
   const candidateById = new Map(candidates.map((candidate) => [candidate.id, candidate]));
   const candidateSlides = convention.issues.flatMap((issue) => issue.positions
     .filter((position) => position.status === '직접 확인' && candidateById.get(position.candidateId)?.portrait)
@@ -72,7 +89,35 @@ function renderShowcase() {
   const recordSlides = (convention.showcaseRecords ?? [])
     .filter((record) => record.status === '직접 확인' && record.person?.portrait)
     .map((record) => ({ ...record }));
-  const slides = [...candidateSlides, ...recordSlides].sort((a, b) => b.date.localeCompare(a.date));
+  return [...candidateSlides, ...recordSlides].sort(compareShowcaseOrder);
+}
+function personHref(person) { return `#person=${encodeURIComponent(person.id)}`; }
+function renderPersonDetail() {
+  const panel = $('#person-detail');
+  const match = location.hash.match(/^#person=([^&]+)$/);
+  if (!match) { panel.hidden = true; panel.replaceChildren(); return; }
+  const personId = decodeURIComponent(match[1]);
+  const records = getShowcaseSlides().filter((slide) => slide.person.id === personId).sort((a, b) => b.date.localeCompare(a.date));
+  if (!records.length) { panel.hidden = true; panel.replaceChildren(); return; }
+  const person = records[0].person;
+  const close = element('a', 'person-detail-close', '기록 목록으로 돌아가기'); close.href = '#showcase-title';
+  const heading = element('div', 'person-detail-heading');
+  const portrait = document.createElement('img'); portrait.src = person.portrait.url; portrait.alt = `${person.name} 공개 프로필 사진`; portrait.className = 'person-detail-portrait';
+  const photoSource = element('a', 'portrait-provenance', person.portrait.label); photoSource.href = person.portrait.sourceUrl; photoSource.target = '_blank'; photoSource.rel = 'noreferrer';
+  const identity = element('div'); identity.append(element('p', 'section-kicker', '인물별 기록'), element('h2', null, person.name), element('p', 'showcase-position', person.office), photoSource);
+  heading.append(portrait, identity);
+  const list = element('div', 'person-record-list');
+  for (const record of records) {
+    const source = sourceById.get(record.sourceId); const item = element('article', 'person-record');
+    item.append(element('p', 'showcase-issue', record.issueLabel), element('blockquote', null, `“${record.quote}”`));
+    const meta = element('p', 'showcase-meta'); meta.append(document.createTextNode(`${record.date} · ${record.recordClass} · `), sourceLink(source));
+    item.append(meta, element('p', 'boundary', record.boundary)); list.append(item);
+  }
+  panel.hidden = false; panel.replaceChildren(close, heading, element('p', 'boundary', `${person.name}의 이 화면 수록 기록 ${records.length}건입니다. 수록되지 않은 발언이 없었다는 뜻은 아닙니다.`), list);
+  panel.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+}
+function renderShowcase() {
+  const slides = getShowcaseSlides();
   const stage = $('#statement-showcase');
   const previous = $('#showcase-previous');
   const next = $('#showcase-next');
@@ -87,9 +132,9 @@ function renderShowcase() {
     const slide = slides[index]; const source = sourceById.get(slide.sourceId);
     const person = slide.person;
     const card = element('article', 'showcase-card');
-    const photoLink = element('a', 'showcase-photo-link'); photoLink.href = person.portrait.sourceUrl; photoLink.target = '_blank'; photoLink.rel = 'noreferrer'; photoLink.setAttribute('aria-label', `${person.name} ${person.portrait.label} 원문 열기`);
+    const photoLink = element('a', 'showcase-photo-link'); photoLink.href = personHref(person); photoLink.setAttribute('aria-label', `${person.name}의 수록 발언 보기`);
     const photo = document.createElement('img'); photo.className = 'showcase-photo'; photo.src = person.portrait.url; photo.alt = `${person.name} 공개 프로필 사진`; photo.loading = 'eager'; photo.addEventListener('error', () => { photoLink.replaceChildren(element('span', 'showcase-photo-fallback', '사진 원문을 불러오지 못했습니다')); }); photoLink.append(photo);
-    const copy = element('div', 'showcase-copy'); copy.append(element('p', 'showcase-position', person.office), element('h3', null, person.name), element('p', 'showcase-issue', slide.issueLabel), element('blockquote', null, `“${slide.quote}”`));
+    const copy = element('div', 'showcase-copy'); const name = element('a', 'showcase-name', person.name); name.href = personHref(person); copy.append(element('p', 'showcase-position', person.office), name, element('p', 'showcase-issue', slide.issueLabel), element('blockquote', null, `“${slide.quote}”`));
     const meta = element('p', 'showcase-meta'); meta.append(document.createTextNode(`${slide.date} · ${slide.recordClass} · ${slide.status} · `), sourceLink(source));
     const provenance = element('a', 'portrait-provenance', person.portrait.label); provenance.href = person.portrait.sourceUrl; provenance.target = '_blank'; provenance.rel = 'noreferrer'; copy.append(meta, provenance, element('p', 'boundary', slide.boundary));
     const count = element('p', 'showcase-count', `${index + 1} / ${slides.length}`); card.append(photoLink, copy, count); stage.replaceChildren(card);
@@ -103,5 +148,7 @@ function renderShowcase() {
   draw(); start();
 }
 function render() { renderFilters(); renderComparison(); }
+window.addEventListener('hashchange', renderPersonDetail);
 renderShowcase();
+renderPersonDetail();
 renderStatus(); renderSelectionLens(); renderSources(); render();
