@@ -1,19 +1,49 @@
 <!doctype html>
 <html lang="ko">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>투표는 총알보다 강하다 — 2026 민주당 전당대회</title><link rel="stylesheet" href="./styles.css"></head>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>투표는 총알보다 강하다 — 공개 발언 기록</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
 <body>
-<a class="skip-link" href="#comparison">비교표로 건너뛰기</a>
-<header class="masthead"><div class="frame"><p class="eyebrow">2026-08-17 · 더불어민주당 제3차 정기전국당원대회</p><h1>투표는 총알보다 강하다</h1><p class="lede">후보와 관련 인물의 공개 발언을 이슈·기록별로 확인하는 로컬 비교 기록</p><section class="statement-showcase" aria-labelledby="showcase-title"><div class="showcase-heading"><p class="section-kicker">확인된 기록</p><h2 id="showcase-title">인물 · 직책 · 이름 · 발언</h2><p>사진이 공개 프로필 원문으로 확인되고, 직접 인용이 있는 기록만 보여줍니다. 첫 표시 순서는 인지도, 공개 직책, 기록일을 차례로 반영한 편집 순서이며, 개별 인물의 점수·영향력·우열 판정은 아닙니다.</p></div><div id="statement-showcase" class="statement-showcase-stage" aria-live="polite"></div><div class="showcase-controls" aria-label="기록 슬라이드 제어"><button id="showcase-previous" type="button" aria-label="이전 기록">이전</button><button id="showcase-next" type="button" aria-label="다음 기록">다음</button><button id="showcase-pause" type="button" aria-pressed="false">자동 넘김 멈춤</button></div></section></div></header>
-<main class="frame">
-<section id="people-index" class="people-index" aria-labelledby="people-index-title"><p class="section-kicker">인물별 기록</p><h2 id="people-index-title">사진 또는 이름을 눌러 전체 발언 보기</h2><p class="boundary">이 화면에 수록된 직접 확인 기록이 있는 인물만 표시합니다. 수록되지 않은 발언이 없었다는 뜻은 아닙니다.</p><div id="people-index-list" class="people-index-list"></div></section>
-<section id="person-detail" class="person-detail" aria-live="polite" hidden></section>
-<section class="intro"><p class="section-kicker">읽는 법</p><h2>발언의 확인 상태를 비교합니다</h2><p>표의 표시는 찬반이 아닙니다. <strong>직접 확인</strong>은 인용문을 확인한 경우, <strong>조건부·절차 제안</strong>은 제안의 범위를 보이는 경우입니다. 찾지 못한 칸은 의견 부재의 증거가 아닙니다.</p></section>
-<section class="intro" aria-labelledby="selection-lens-title"><p class="section-kicker">사안 선정 기준</p><h2 id="selection-lens-title">무엇을 먼저 기록할지 정하는 관점</h2><div id="selection-lens"></div></section>
-<section class="editorial-position" aria-labelledby="editorial-position-title"><p class="section-kicker">편집자 입장</p><h2 id="editorial-position-title">건강한 내부 비판은 보호돼야 합니다</h2><p>이 기록은 건강한 내부 비판은 보호돼야 하며, 통합을 말하면서 비판자를 낙인·공격하는 정치 행태는 비판한다는 입장을 가집니다.</p><p>이 사이트는 통합을 표방하면서 내부 비판자·진영 미디어를 압박하거나 낙인찍는 정치 행태가 민주당의 공론장을 좁힌다고 봅니다.</p><p class="boundary">이 입장은 원문 기록과 구분됩니다. 각 인물의 발언·반응은 날짜와 출처를 함께 제시하며, 이 화면이 개별 인물의 동기·진실성·갈라치기 여부를 사실로 판정하지는 않습니다.</p></section>
-<section class="event-status" aria-labelledby="event-title"><p class="section-kicker">대회·후보 상태</p><h2 id="event-title">최종 투표 대상과 결과 기록</h2><div id="candidate-status" class="candidate-status"></div><details><summary>등록 후 최종 투표 대상 아님</summary><div id="excluded-candidates"></div></details></section>
-<section id="comparison" aria-labelledby="comparison-title"><p class="section-kicker">이슈 × 후보</p><h2 id="comparison-title">직접 확인한 공개 기록만 표시</h2><div class="filters"><fieldset><legend>선출 직위</legend><div id="office-filters" class="filter-row"></div></fieldset><fieldset><legend>이슈</legend><div id="issue-filters" class="filter-row"></div></fieldset></div><p id="comparison-note" class="boundary"></p><div id="comparison-table" class="comparison-scroll" tabindex="0"></div></section>
-<section class="source-section"><p class="section-kicker">출처</p><h2>확인한 원문·보도</h2><div id="sources" class="sources"></div></section>
-</main>
-<footer class="frame"><p>이 화면은 개인 활동 이력·점수·계파·영향력·동기·비공개 투표를 다루지 않습니다. 기존 검증 기록은 별도 보관 중.</p></footer>
-<script type="module" src="./app.js"></script>
-</body></html>
+  <a class="skip-link" href="#people-index">인물 목록으로 건너뛰기</a>
+  <header class="masthead">
+    <div class="frame">
+      <p class="eyebrow">공개 원문 기반 정치 발언 기록</p>
+      <h1>투표는 총알보다 강하다</h1>
+      <p class="lede">인물의 공개 프로필 사진과 직접 확인한 최근 발언을 기록합니다.</p>
+      <section class="statement-showcase" aria-labelledby="showcase-title">
+        <div class="showcase-heading">
+          <p class="section-kicker">최근 기록</p>
+          <h2 id="showcase-title">인물 · 직책 · 직접 인용</h2>
+          <p>첫 표시 순서는 인지도, 공개 직책, 기록일을 차례로 반영한 편집 순서입니다. 점수·영향력·우열을 판정하지 않습니다.</p>
+        </div>
+        <div id="statement-showcase" class="statement-showcase-stage" aria-live="polite"></div>
+        <div class="showcase-controls" aria-label="기록 슬라이드 제어">
+          <button id="showcase-previous" type="button" aria-label="이전 기록">이전</button>
+          <button id="showcase-next" type="button" aria-label="다음 기록">다음</button>
+          <button id="showcase-pause" type="button" aria-pressed="false">자동 넘김 멈춤</button>
+        </div>
+      </section>
+    </div>
+  </header>
+  <main class="frame">
+    <section id="people-index" class="people-index" aria-labelledby="people-index-title">
+      <p class="section-kicker">인물별 기록</p>
+      <h2 id="people-index-title">사진 또는 이름을 눌러 전체 발언 보기</h2>
+      <p class="boundary">현직, 후보 기록, 기록 당시 역할을 구분해 표시합니다. 이 화면에 없는 발언이 없었다는 뜻은 아닙니다.</p>
+      <div id="people-index-list" class="people-index-list"></div>
+    </section>
+    <section id="person-detail" class="person-detail" aria-live="polite" hidden></section>
+    <section class="editorial-position" aria-labelledby="editorial-position-title">
+      <p class="section-kicker">편집자 입장</p>
+      <h2 id="editorial-position-title">건강한 내부 비판은 보호돼야 합니다</h2>
+      <p>통합을 말하면서 내부 비판자를 낙인·공격하는 정치 행태는 비판합니다.</p>
+      <p class="boundary">이 입장은 원문 기록과 구분됩니다. 각 인물의 동기·진실성·갈라치기 여부를 사실로 판정하지 않습니다.</p>
+    </section>
+  </main>
+  <footer class="frame"><p>모든 수록 기록은 출처 원문 링크와 직접 인용, 해석 경계를 함께 표시합니다.</p></footer>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

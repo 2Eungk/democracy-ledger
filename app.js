@@ -64,7 +64,19 @@ function renderSelectionLens() {
   const source = element('a', null, '근거 메모 보기'); source.href = lens.sourceNote; source.target = '_blank'; source.rel = 'noreferrer';
   $('#selection-lens').replaceChildren(element('p', null, lens.basis), list, note, source);
 }
-// 이 순서는 사실·평가가 아닌 첫 화면 편집 순서입니다. 숫자는 화면에 노출하지 않습니다.
+// 현재 직책과 과거·후보 맥락을 섞지 않기 위한 화면 라벨입니다.
+const personRoleStatus = new Map([
+  ['kim-min-seok', { label: '현직', role: '더불어민주당 당대표' }],
+  ['han-byung-do', { label: '현직', role: '더불어민주당 원내대표' }],
+  ['choi-min-hee', { label: '현직', role: '더불어민주당 최고위원' }],
+  ['han-min-soo', { label: '현직', role: '더불어민주당 최고위원' }],
+  ['seo-mi-hwa', { label: '현직', role: '더불어민주당 최고위원' }],
+  ['lee-seong-yoon', { label: '현직', role: '더불어민주당 최고위원' }],
+  ['park-sun-won', { label: '현직', role: '더불어민주당 최고위원' }],
+  ['jung-cheong-rae', { label: '후보 기록', role: '전당대회 당시 당대표 후보' }],
+  ['park-beom-gye', { label: '기록 당시', role: '국회의원' }],
+]);
+function roleFor(person) { return personRoleStatus.get(person.id) ?? { label: '기록 당시', role: person.office }; }
 const showcasePriority = new Map([
   ['kim-min-seok', { recognition: 100, office: 4 }],
   ['jung-cheong-rae', { recognition: 95, office: 4 }],
@@ -101,7 +113,7 @@ function renderPeopleIndex() {
   const cards = [...byPerson.values()].sort((a, b) => compareShowcaseOrder(a.latest, b.latest)).map(({ person, count, latest }) => {
     const card = element('a', 'person-index-card'); card.href = personHref(person); card.setAttribute('aria-label', `${person.name}의 수록 발언 ${count}건 보기`);
     const image = document.createElement('img'); image.src = person.portrait.url; image.alt = `${person.name} 공개 프로필 사진`; image.loading = 'lazy'; image.addEventListener('error', () => { image.hidden = true; });
-    const copy = element('span', 'person-index-copy'); copy.append(element('strong', null, person.name), element('span', null, person.office), element('span', 'person-index-count', `수록 기록 ${count}건`), element('span', 'person-index-latest', `최근 ${latest.date}`));
+    const role = roleFor(person); const copy = element('span', 'person-index-copy'); const status = element('span', 'role-status', role.label); copy.append(element('strong', null, person.name), status, element('span', null, role.role), element('span', 'person-index-count', `수록 기록 ${count}건`), element('span', 'person-index-latest', `최근 ${latest.date}`));
     card.append(image, copy); return card;
   });
   $('#people-index-list').replaceChildren(...cards);
@@ -118,7 +130,7 @@ function renderPersonDetail() {
   const heading = element('div', 'person-detail-heading');
   const portrait = document.createElement('img'); portrait.src = person.portrait.url; portrait.alt = `${person.name} 공개 프로필 사진`; portrait.className = 'person-detail-portrait';
   const photoSource = element('a', 'portrait-provenance', person.portrait.label); photoSource.href = person.portrait.sourceUrl; photoSource.target = '_blank'; photoSource.rel = 'noreferrer';
-  const identity = element('div'); identity.append(element('p', 'section-kicker', '인물별 기록'), element('h2', null, person.name), element('p', 'showcase-position', person.office), photoSource);
+  const role = roleFor(person); const identity = element('div'); const status = element('span', 'role-status', role.label); identity.append(element('p', 'section-kicker', '인물별 기록'), element('h2', null, person.name), status, element('p', 'showcase-position', role.role), photoSource);
   heading.append(portrait, identity);
   const list = element('div', 'person-record-list');
   for (const record of records) {
@@ -148,7 +160,7 @@ function renderShowcase() {
     const card = element('article', 'showcase-card');
     const photoLink = element('a', 'showcase-photo-link'); photoLink.href = personHref(person); photoLink.setAttribute('aria-label', `${person.name}의 수록 발언 보기`);
     const photo = document.createElement('img'); photo.className = 'showcase-photo'; photo.src = person.portrait.url; photo.alt = `${person.name} 공개 프로필 사진`; photo.loading = 'eager'; photo.addEventListener('error', () => { photoLink.replaceChildren(element('span', 'showcase-photo-fallback', '사진 원문을 불러오지 못했습니다')); }); photoLink.append(photo);
-    const copy = element('div', 'showcase-copy'); const name = element('a', 'showcase-name', person.name); name.href = personHref(person); copy.append(element('p', 'showcase-position', person.office), name, element('p', 'showcase-issue', slide.issueLabel), element('blockquote', null, `“${slide.quote}”`));
+    const role = roleFor(person); const copy = element('div', 'showcase-copy'); const name = element('a', 'showcase-name', person.name); name.href = personHref(person); const status = element('span', 'role-status', role.label); copy.append(status, element('p', 'showcase-position', role.role), name, element('p', 'showcase-issue', slide.issueLabel), element('blockquote', null, `“${slide.quote}”`));
     const meta = element('p', 'showcase-meta'); meta.append(document.createTextNode(`${slide.date} · ${slide.recordClass} · ${slide.status} · `), sourceLink(source));
     const provenance = element('a', 'portrait-provenance', person.portrait.label); provenance.href = person.portrait.sourceUrl; provenance.target = '_blank'; provenance.rel = 'noreferrer'; copy.append(meta, provenance, element('p', 'boundary', slide.boundary));
     const count = element('p', 'showcase-count', `${index + 1} / ${slides.length}`); card.append(photoLink, copy, count); stage.replaceChildren(card);
@@ -166,4 +178,3 @@ window.addEventListener('hashchange', renderPersonDetail);
 renderShowcase();
 renderPeopleIndex();
 renderPersonDetail();
-renderStatus(); renderSelectionLens(); renderSources(); render();
