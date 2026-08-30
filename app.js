@@ -92,6 +92,20 @@ function getShowcaseSlides() {
   return [...candidateSlides, ...recordSlides].sort(compareShowcaseOrder);
 }
 function personHref(person) { return `#person=${encodeURIComponent(person.id)}`; }
+function renderPeopleIndex() {
+  const byPerson = new Map();
+  for (const slide of getShowcaseSlides()) {
+    if (!byPerson.has(slide.person.id)) byPerson.set(slide.person.id, { person: slide.person, count: 0, latest: slide });
+    byPerson.get(slide.person.id).count += 1;
+  }
+  const cards = [...byPerson.values()].sort((a, b) => compareShowcaseOrder(a.latest, b.latest)).map(({ person, count, latest }) => {
+    const card = element('a', 'person-index-card'); card.href = personHref(person); card.setAttribute('aria-label', `${person.name}의 수록 발언 ${count}건 보기`);
+    const image = document.createElement('img'); image.src = person.portrait.url; image.alt = `${person.name} 공개 프로필 사진`; image.loading = 'lazy'; image.addEventListener('error', () => { image.hidden = true; });
+    const copy = element('span', 'person-index-copy'); copy.append(element('strong', null, person.name), element('span', null, person.office), element('span', 'person-index-count', `수록 기록 ${count}건`), element('span', 'person-index-latest', `최근 ${latest.date}`));
+    card.append(image, copy); return card;
+  });
+  $('#people-index-list').replaceChildren(...cards);
+}
 function renderPersonDetail() {
   const panel = $('#person-detail');
   const match = location.hash.match(/^#person=([^&]+)$/);
@@ -150,5 +164,6 @@ function renderShowcase() {
 function render() { renderFilters(); renderComparison(); }
 window.addEventListener('hashchange', renderPersonDetail);
 renderShowcase();
+renderPeopleIndex();
 renderPersonDetail();
 renderStatus(); renderSelectionLens(); renderSources(); render();
