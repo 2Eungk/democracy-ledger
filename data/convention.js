@@ -150,6 +150,17 @@ export const convention = Object.freeze({
       sourceId: 'theminjoo-han-missing-person-law',
       boundary: '정책조정회의에서 한 원내대표의 입법 논의 계획 발언입니다. 성인실종 관련 법안의 통과·시행, 수색 체계 구축 또는 개별 사건의 수사 결과를 입증하는 자료로 표시하지 않습니다.',
     },
+    {
+      id: 'kim-min-seok-health-policy-priority',
+      person: { id: 'kim-min-seok', name: '김민석', office: '더불어민주당 당대표', portrait: { url: 'https://theminjoo.kr/people/connect/people/364/profile.jpg', sourceUrl: 'https://theminjoo.kr/main/sub/introduce/team.php?class=2', label: '더불어민주당 공개 프로필 사진' } },
+      recordClass: '당 공식 행사 인사말',
+      issueLabel: '의료·교육·문화와 지역 발전의 관계 언급',
+      status: '직접 확인',
+      quote: '이제는 산업 투자나 지방 균형 발전, 일자리를 만들려 해도 제일 중요한 건 의료, 교육, 문화 이 세 가지가 안 되면 되지 않습니다. 그 첫 번째 자리에 있는 것이 의료입니다.',
+      date: '2026-08-30',
+      sourceId: 'theminjoo-kim-health-policy-priority',
+      boundary: '김윤 의원 지역사무소 개소식에서 한 김민석 당대표의 인사말입니다. 의료·교육·문화 관련 정책의 최종 당론·예산·입법, 지역 발전 또는 정책 효과를 입증하는 자료로 표시하지 않습니다.',
+    }
   ],
   excludedAfterRegistration: [
     { name: '송영길', reason: '확인 자료 없음', date: '', boundary: '최종 결과표에 포함되지 않은 사유는 직접 확인한 공식 자료에서 찾지 못해 기재하지 않습니다.' },
@@ -169,6 +180,7 @@ export const convention = Object.freeze({
     { id: 'theminjoo-lee-disaster-recovery', title: '더불어민주당 공보국 — 제5차 안동 최고위원회의 모두발언', url: 'https://www.theminjoo.kr/main/sub/news/view.php?sno=0&brd=230&post=1219829&search=', tier: '당 공식 회의 발언', date: '2026-08-26', caveat: '더불어민주당 공보국이 공개한 제5차 안동 최고위원회의 이성윤 발언입니다. 피해 복구·예방에 관한 개인 발언의 범위이며, 피해 규모·복구 완료·지원 집행 또는 예방 정책의 효과를 입증하지 않습니다.' },
     { id: 'theminjoo-park-local-outreach', title: '더불어민주당 공보국 — 제5차 안동 최고위원회의 모두발언', url: 'https://www.theminjoo.kr/main/sub/news/view.php?sno=0&brd=230&post=1219829&search=', tier: '당 공식 회의 발언', date: '2026-08-26', caveat: '더불어민주당 공보국이 공개한 제5차 안동 최고위원회의 박선원 발언입니다. 지역 유권자와의 소통·접근에 관한 개인 발언의 범위이며, 지지 변화·지역 사업 성과 또는 선거 결과를 입증하지 않습니다.' },
     { id: 'theminjoo-han-missing-person-law', title: '더불어민주당 공보국 — 제93차 정책조정회의 모두발언', url: 'https://www.theminjoo.kr/main/sub/news/view.php?sno=0&brd=230&post=1219845&search=', tier: '당 공식 회의 발언', date: '2026-08-27', caveat: '더불어민주당 공보국이 공개한 제93차 정책조정회의 한병도 발언입니다. 성인 실종 관련 법안의 논의 계획을 확인하는 범위이며, 법안 통과·시행, 수색 체계 구축 또는 개별 사건의 수사 결과를 입증하지 않습니다.' },
+    { id: 'theminjoo-kim-health-policy-priority', title: '더불어민주당 공보국 — 김민석 당대표, 김윤 의원 지역사무소 개소식 인사말', url: 'https://www.theminjoo.kr/main/sub/news/view.php?sno=0&brd=230&post=1219911&search=', tier: '당 공식 행사 인사말', date: '2026-08-30', caveat: '더불어민주당 공보국이 공개한 김윤 의원 지역사무소 개소식 인사말입니다. 의료·교육·문화와 지역 발전을 언급한 당대표 발언의 범위이며, 정책의 최종 당론·예산·입법·지역 발전 또는 정책 효과를 입증하지 않습니다.' },
     { id: 'president-office-party-dinner', title: '청와대 — 더불어민주당 당대표·후보자 만찬 간담회 서면브리핑', url: 'https://www.president.go.kr/briefings/3yJOCRPk', tier: '청와대 공식 브리핑', date: '2026-08-19', caveat: '청와대 정무수석 홍익표 명의의 서면브리핑입니다. 만찬과 브리핑에서 김민석에게 귀속한 발언을 확인하는 범위이며, 전당대회 지시·개입·후보 선출 또는 갈등 해결을 입증하지 않습니다.' },
     { id: 'yna-integration', title: '김민석표 연대·통합 시동', url: 'https://www.yna.co.kr/view/AKR20260824125000001?input=1195m', tier: '보도·발언 인용', date: '2026-08-24', caveat: '연합뉴스가 김민석 대표의 회의 발언을 인용한 보도입니다. 합당의 구체적 방식·시점까지 확정한 발언으로 읽지 않습니다.' },
     { id: 'yna-procedure', title: '제주·인천 합동연설회 보도', url: 'https://www.yna.co.kr/view/AKR20260808029951001?input=1195m', tier: '보도·발언 인용', date: '2026-08-08', caveat: '연합뉴스의 합동연설회 보도입니다. 해당 인용은 경선 절차 논쟁에 관한 발언이며, 일반적 제도 입장 전체를 확정하지 않습니다.' },
