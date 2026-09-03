@@ -8,18 +8,29 @@ import { convention, validateConvention } from '../data/convention.js';
 const execFileAsync = promisify(execFile);
 const timeoutMs = 20_000;
 const normalize = (value) => value
+  .replace(/<[^>]*>/g, ' ')
+  .replace(/&nbsp;|&#160;/gi, ' ')
+  .replace(/&quot;|&#34;/gi, '"')
+  .replace(/&amp;/gi, '&')
   .replace(/[“”‘’]/g, '')
   .replace(/\s+/g, '')
   .trim();
 
-async function fetchWithCurl(url) {
+function sourceUserAgent(url) {
+  const hostname = new URL(url).hostname;
+  return hostname === 'facebook.com' || hostname.endsWith('.facebook.com')
+    ? 'Mozilla/5.0'
+    : 'democracy-ledger-source-verifier/1.0';
+}
+
+async function fetchWithCurl(url, userAgent) {
   const directory = await mkdtemp(path.join(os.tmpdir(), 'democracy-ledger-'));
   const cookieJar = path.join(directory, 'cookies.txt');
   try {
     const { stdout } = await execFileAsync('curl', [
       '-fsSL',
       '--max-time', String(timeoutMs / 1000),
-      '-A', 'democracy-ledger-source-verifier/1.0',
+      '-A', userAgent,
       '-c', cookieJar,
       '-b', cookieJar,
       url,
@@ -31,9 +42,10 @@ async function fetchWithCurl(url) {
 }
 
 async function fetchText(url) {
+  const userAgent = sourceUserAgent(url);
   try {
     const response = await fetch(url, {
-      headers: { 'user-agent': 'democracy-ledger-source-verifier/1.0' },
+      headers: { 'user-agent': userAgent },
       signal: AbortSignal.timeout(timeoutMs),
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -42,7 +54,7 @@ async function fetchText(url) {
     return response.text();
   } catch (fetchError) {
     try {
-      return await fetchWithCurl(url);
+      return await fetchWithCurl(url, userAgent);
     } catch (curlError) {
       throw new Error(`fetch failed (${fetchError.message}); curl fallback failed (${curlError.message})`);
     }
