@@ -171,6 +171,17 @@ export const convention = Object.freeze({
       date: '2026-08-30',
       sourceId: 'theminjoo-kim-health-policy-priority',
       boundary: '김윤 의원 지역사무소 개소식에서 한 김민석 당대표의 인사말입니다. 의료·교육·문화 관련 정책의 최종 당론·예산·입법, 지역 발전 또는 정책 효과를 입증하는 자료로 표시하지 않습니다.',
+    },
+    {
+      id: 'park-sun-won-cho-kuk-language-rebuttal',
+      person: { id: 'park-sun-won', name: '박선원', office: '더불어민주당 최고위원', portrait: { url: 'https://theminjoo.kr/people/connect/people/13432363/profile.jpg', sourceUrl: 'https://theminjoo.kr/main/sub/introduce/team.php?class=2', label: '더불어민주당 공개 프로필 사진' } },
+      recordClass: '정치인 직접 반박 발언',
+      issueLabel: '조국의 공소취소 관련 글에 대한 반박',
+      status: '직접 확인',
+      quote: '동지의 언어일 수 없다',
+      date: '2026-09-02',
+      sourceId: 'kbs-park-cho-kuk-language-rebuttal',
+      boundary: '세종시 당 최고위원회의에서 조국의 공소취소 관련 글을 두고 한 박선원 최고위원의 직접 반박 발언입니다. 이 기록은 발언의 귀속과 대상만 보여주며, 조국의 글에 대한 법률적 평가, 당내 다수 입장, 갈등의 원인·정당성 또는 향후 관계를 판단하지 않습니다.',
     }
   ],
   excludedAfterRegistration: [
@@ -193,6 +204,7 @@ export const convention = Object.freeze({
     { id: 'theminjoo-han-missing-person-law', title: '더불어민주당 공보국 — 제93차 정책조정회의 모두발언', url: 'https://www.theminjoo.kr/main/sub/news/view.php?sno=0&brd=230&post=1219845&search=', tier: '당 공식 회의 발언', date: '2026-08-27', caveat: '더불어민주당 공보국이 공개한 제93차 정책조정회의 한병도 발언입니다. 성인 실종 관련 법안의 논의 계획을 확인하는 범위이며, 법안 통과·시행, 수색 체계 구축 또는 개별 사건의 수사 결과를 입증하지 않습니다.' },
     { id: 'theminjoo-han-police-accountability', title: '더불어민주당 공보국 — 제97차 원내대책회의 모두발언', url: 'https://www.theminjoo.kr/main/sub/news/view.php?sno=0&brd=230&post=1219806&search=', tier: '당 공식 회의 발언', date: '2026-08-25', caveat: '더불어민주당 공보국이 공개한 제97차 원내대책회의 한병도 발언입니다. 경찰 수사 책임성·투명성·민주적 통제를 언급한 범위이며, 개별 사건의 사실관계·수사 결과, 제도 개정의 확정·시행 또는 신뢰 회복의 결과를 입증하지 않습니다.' },
     { id: 'theminjoo-kim-health-policy-priority', title: '더불어민주당 공보국 — 김민석 당대표, 김윤 의원 지역사무소 개소식 인사말', url: 'https://www.theminjoo.kr/main/sub/news/view.php?sno=0&brd=230&post=1219911&search=', tier: '당 공식 행사 인사말', date: '2026-08-30', caveat: '더불어민주당 공보국이 공개한 김윤 의원 지역사무소 개소식 인사말입니다. 의료·교육·문화와 지역 발전을 언급한 당대표 발언의 범위이며, 정책의 최종 당론·예산·입법·지역 발전 또는 정책 효과를 입증하지 않습니다.' },
+    { id: 'kbs-park-cho-kuk-language-rebuttal', title: 'KBS 뉴스 — 조국 “이 대통령, 공소 취소 밀어붙이면 낭패”…박선원 “배은망덕” [이런뉴스]', url: 'https://news.kbs.co.kr/news/pc/view/view.do?ncd=8652574&ref=A', tier: '방송뉴스 기사', date: '2026-09-02', caveat: 'KBS가 세종시 당 최고위원회의 박선원 발언을 기사 본문으로 직접 인용한 보도입니다. 조국의 공소취소 관련 글에 대한 박선원의 반박 발언만 확인하며, 기사에 실린 다른 인물의 주장·법률 판단은 이 기록에 포함하지 않습니다.' },
     { id: 'president-office-party-dinner', title: '청와대 — 더불어민주당 당대표·후보자 만찬 간담회 서면브리핑', url: 'https://www.president.go.kr/briefings/3yJOCRPk', tier: '청와대 공식 브리핑', date: '2026-08-19', caveat: '청와대 정무수석 홍익표 명의의 서면브리핑입니다. 만찬과 브리핑에서 김민석에게 귀속한 발언을 확인하는 범위이며, 전당대회 지시·개입·후보 선출 또는 갈등 해결을 입증하지 않습니다.' },
     { id: 'yna-integration', title: '김민석표 연대·통합 시동', url: 'https://www.yna.co.kr/view/AKR20260824125000001?input=1195m', tier: '보도·발언 인용', date: '2026-08-24', caveat: '연합뉴스가 김민석 대표의 회의 발언을 인용한 보도입니다. 합당의 구체적 방식·시점까지 확정한 발언으로 읽지 않습니다.' },
     { id: 'yna-procedure', title: '제주·인천 합동연설회 보도', url: 'https://www.yna.co.kr/view/AKR20260808029951001?input=1195m', tier: '보도·발언 인용', date: '2026-08-08', caveat: '연합뉴스의 합동연설회 보도입니다. 해당 인용은 경선 절차 논쟁에 관한 발언이며, 일반적 제도 입장 전체를 확정하지 않습니다.' },
