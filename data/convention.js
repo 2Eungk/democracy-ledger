@@ -204,6 +204,17 @@ export const convention = Object.freeze({
       date: '2026-09-01',
       sourceId: 'facebook-noh-gongchimo-explanation',
       boundary: '노종면 의원이 본인 페이스북에서 자신의 공취모 관련 방송 발언을 설명·반박한 글입니다. 이 기록은 해당 해명의 존재와 문구만 보여주며, 공취모의 구성·운영·의도, 관련 비판의 타당성, 언급된 사건의 사실관계 또는 갈등의 원인을 판단하지 않습니다.',
+    },
+    {
+      id: 'han-dong-su-ethics-chair-resignation',
+      person: { id: 'han-dong-su', name: '한동수', office: '전 더불어민주당 중앙당 윤리심판원장' },
+      recordClass: '본인 SNS 사임 알림',
+      issueLabel: '중앙당 윤리심판원장직 사임 알림',
+      status: '직접 확인',
+      quote: '어제 민주당 중앙당 윤리심판원장직에서 물러났습니다.',
+      date: '2026-09-01',
+      sourceId: 'facebook-han-ethics-chair-resignation',
+      boundary: '한동수가 본인 페이스북에서 윤리심판원장직에서 물러났다고 알린 글입니다. 이 기록은 본인의 사임 알림과 글에 적힌 범위만 보여주며, 사임의 배경·동기·당내 관계, 심판원 운영의 적법성 또는 후속 인선의 의미를 판단하지 않습니다.',
     }
   ],
   excludedAfterRegistration: [
@@ -229,6 +240,7 @@ export const convention = Object.freeze({
     { id: 'kbs-park-cho-kuk-language-rebuttal', title: 'KBS 뉴스 — 조국 “이 대통령, 공소 취소 밀어붙이면 낭패”…박선원 “배은망덕” [이런뉴스]', url: 'https://news.kbs.co.kr/news/pc/view/view.do?ncd=8652574&ref=A', tier: '방송뉴스 기사', date: '2026-09-02', caveat: 'KBS가 세종시 당 최고위원회의 박선원 발언을 기사 본문으로 직접 인용한 보도입니다. 조국의 공소취소 관련 글에 대한 박선원의 반박 발언만 확인하며, 기사에 실린 다른 인물의 주장·법률 판단은 이 기록에 포함하지 않습니다.' },
     { id: 'chosunbiz-kim-kang-dismissal-direction', title: '조선비즈 — 강민구 윤리감찰단 부단장 해임 보도', url: 'https://biz.chosun.com/policy/politics/2026/09/01/VA46GBIMORBTHO2GIVMBMY5EFU/', tier: '보도·당 언론공지 인용', date: '2026-09-01', caveat: '조선비즈가 더불어민주당 언론공지의 김민석 당대표 해임 지시 문구를 인용한 기사입니다. 해임 지시의 존재와 대상만 확인하며, 기사에 포함된 메시지 내용·해임 배경에 관한 서술이나 분석은 이 기록에 포함하지 않습니다.' },
     { id: 'facebook-noh-gongchimo-explanation', title: '노종면 페이스북 — 공취모 관련 방송 발언 설명', url: 'https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fnodolbal%2Fposts%2F2971616543175331%2F&show_text=true', tier: '본인 SNS 원문', date: '2026-09-01', caveat: '노종면 의원의 공개 페이스북 게시물을 공식 임베드 경로로 표시한 원문입니다. 게시글은 작성자 자신의 설명·평가이며, 공취모 관련 논쟁이나 언급된 다른 인물·사건의 사실판정 자료로 표시하지 않습니다.' },
+    { id: 'facebook-han-ethics-chair-resignation', title: '한동수 페이스북 — 중앙당 윤리심판원장직 사임 알림', url: 'https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fdshdaum%2Fposts%2F28087972704185365%2F&show_text=true', tier: '본인 SNS 원문', date: '2026-09-01', caveat: '한동수의 공개 페이스북 게시물을 공식 임베드 경로로 표시한 원문입니다. 게시글은 작성자 자신의 사임 알림·설명이며, 사임 배경, 언급된 심판위원의 사퇴·구성 또는 당내 사안의 사실판정 자료로 표시하지 않습니다.' },
     { id: 'president-office-party-dinner', title: '청와대 — 더불어민주당 당대표·후보자 만찬 간담회 서면브리핑', url: 'https://www.president.go.kr/briefings/3yJOCRPk', tier: '청와대 공식 브리핑', date: '2026-08-19', caveat: '청와대 정무수석 홍익표 명의의 서면브리핑입니다. 만찬과 브리핑에서 김민석에게 귀속한 발언을 확인하는 범위이며, 전당대회 지시·개입·후보 선출 또는 갈등 해결을 입증하지 않습니다.' },
     { id: 'yna-integration', title: '김민석표 연대·통합 시동', url: 'https://www.yna.co.kr/view/AKR20260824125000001?input=1195m', tier: '보도·발언 인용', date: '2026-08-24', caveat: '연합뉴스가 김민석 대표의 회의 발언을 인용한 보도입니다. 합당의 구체적 방식·시점까지 확정한 발언으로 읽지 않습니다.' },
     { id: 'yna-procedure', title: '제주·인천 합동연설회 보도', url: 'https://www.yna.co.kr/view/AKR20260808029951001?input=1195m', tier: '보도·발언 인용', date: '2026-08-08', caveat: '연합뉴스의 합동연설회 보도입니다. 해당 인용은 경선 절차 논쟁에 관한 발언이며, 일반적 제도 입장 전체를 확정하지 않습니다.' },
@@ -351,7 +363,7 @@ export function validateConvention(data) {
     if (showcaseIds.has(record.id)) errors.push(`duplicate showcase record id: ${record.id}`);
     showcaseIds.add(record.id);
     if (!isIsoDate(record.date)) errors.push(`invalid showcase record date: ${record.id ?? 'unknown'}`);
-    if (!person?.id || !person.name || !person.office || !person.portrait || !isHttpsUrl(person.portrait.url) || !isHttpsUrl(person.portrait.sourceUrl) || !person.portrait.label) errors.push(`invalid showcase portrait provenance: ${record.id ?? 'unknown'}`);
+    if (!person?.id || !person.name || !person.office || (person.portrait && (!isHttpsUrl(person.portrait.url) || !isHttpsUrl(person.portrait.sourceUrl) || !person.portrait.label))) errors.push(`invalid showcase portrait provenance: ${record.id ?? 'unknown'}`);
   }
   return errors;
 }
